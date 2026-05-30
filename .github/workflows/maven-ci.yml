@@ -1,0 +1,28 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: 複製 GitHub 儲存庫的程式碼到虛擬機中
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Step 2: 設定 Java 17 環境 (
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven # 快取 Maven 依賴，加速後續的 CI 執行
+
+    # Step 3: 使用 Maven 進行編譯並執行所有測試 
+    - name: Build and Run Tests with Maven
+      run: mvn clean verify
