@@ -26,3 +26,9 @@ jobs:
     # Step 3: 使用 Maven 進行編譯並執行所有測試 
     - name: Build and Run Tests with Maven
       run: mvn clean verify
+
+    # Step 4: 執行 Codecov 
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
