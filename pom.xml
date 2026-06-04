@@ -67,10 +67,10 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-                            <mainClass>com.example.MainApp</mainClass>
+                            <mainClass>com.billsplit.MainApp</mainClass>
                             <targetFileName>main.js</targetFileName>
                             
-                            <mainPageTemplate>src/main/webapp/index.html</mainPageTemplate>
+                            <mainPageTemplate>${project.basedir}/src/main/webapp/index.html</mainPageTemplate>
                             
                             <minifying>false</minifying>
                         </configuration>
