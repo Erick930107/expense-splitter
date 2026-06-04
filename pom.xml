@@ -69,7 +69,9 @@
                         <configuration>
                             <mainClass>com.example.MainApp</mainClass>
                             <targetFileName>main.js</targetFileName>
-                            <mainPageGenerated>true</mainPageGenerated>
+                            
+                            <mainPageTemplate>src/main/webapp/index.html</mainPageTemplate>
+                            
                             <minifying>false</minifying>
                         </configuration>
                     </execution>
