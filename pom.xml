@@ -63,7 +63,7 @@
                     <execution>
                         <id>compile-webapp</id>
                         <phase>package</phase> <goals>
-                            <goal>compile-client</goal>
+                            <goal>compile</goal>
                         </goals>
                         <configuration>
                             <mainClass>com.example.MainApp</mainClass>
