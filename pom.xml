@@ -12,6 +12,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <teavm.version>0.10.2</teavm.version>
     </properties>
 
     <dependencies>
@@ -20,6 +21,13 @@
             <artifactId>junit-jupiter</artifactId>
             <version>5.10.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.teavm</groupId>
+            <artifactId>teavm-jso-apis</artifactId>
+            <version>${teavm.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -30,6 +38,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
             </plugin>
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -42,6 +51,25 @@
                         <id>report</id>
                         <phase>test</phase>
                         <goals><goal>report</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.teavm</groupId>
+                <artifactId>teavm-maven-plugin</artifactId>
+                <version>${teavm.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile-webapp</id>
+                        <phase>package</phase> <goals>
+                            <goal>compile-client</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.example.MainApp</mainClass>
+                            <targetFileName>main.js</targetFileName>
+                            <minifying>false</minifying>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
