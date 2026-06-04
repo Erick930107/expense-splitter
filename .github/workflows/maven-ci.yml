@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "main" ]
 
+# 💡 新增權限設定：GitHub Pages 部署需要寫入儲存庫內容的權限
+permissions:
+  contents: write
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -15,7 +19,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # Step 2: 設定 Java 17 環境 (
+    # Step 2: 設定 Java 17 環境
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
@@ -23,6 +27,23 @@ jobs:
         distribution: 'temurin'
         cache: maven # 快取 Maven 依賴，加速後續的 CI 執行
 
-    # Step 3: 使用 Maven 進行編譯並執行所有測試 
+    # Step 3: 使用 Maven 進行編譯、跑測試，並觸發 TeaVM 生成靜態網頁檔案
+    # 這裡使用 mvn clean package，Maven 會自動把編譯好的 JS 網頁放到 target 資料夾
     - name: Build and Run Tests with Maven
-      run: mvn clean verify
+      run: mvn clean package
+
+    # Step 4: 執行 Codecov 上傳覆蓋率報告
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        slug: ${{ github.repository }}
+
+    # 💡 Step 5: 自動架設與更新 GitHub Pages 靜態網站
+    # 使用 if 條件確保只有在 main 分支被更新時，才會執行網頁部署，PR 時只跑測試不部署
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }} # GitHub 內建 Token，免額外設定
+        publish_dir: ./target/teavm/dist # 這是 TeaVM 預設編譯出 HTML 和 JS 的網頁資料夾
