@@ -1,4 +1,4 @@
-package com.example;
+package com.billsplit; // 💡 核心修正：將 package 修改為對應 pom.xml 的 com.billsplit
 
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLElement;
