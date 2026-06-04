@@ -38,12 +38,3 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         slug: ${{ github.repository }}
-
-    # 💡 Step 5: 自動架設與更新 GitHub Pages 靜態網站
-    # 使用 if 條件確保只有在 main 分支被更新時，才會執行網頁部署，PR 時只跑測試不部署
-    - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }} # GitHub 內建 Token，免額外設定
-        publish_dir: ./target/teavm/dist # 這是 TeaVM 預設編譯出 HTML 和 JS 的網頁資料夾
